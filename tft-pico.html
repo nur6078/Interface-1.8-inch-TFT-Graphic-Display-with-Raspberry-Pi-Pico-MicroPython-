@@ -171,16 +171,20 @@
         .string { color: #34d399; }
         .number { color: #fb923c; }
 
+        /* 1280x720 Image Preview Optimization */
         .img-container {
             margin: 30px 0;
             text-align: center;
         }
         .img-container img {
+            width: 100%;
             max-width: 100%;
+            aspect-ratio: 16 / 9; /* এটি সবসময় 1280/720 অনুপাতে ছবি লক রাখবে */
+            object-fit: cover;     /* ছবি যেন কোনোভাবে চ্যাপ্টা বা বিকৃত না হয় */
             height: auto;
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
         }
         .img-caption {
             font-size: 0.88rem;
@@ -205,7 +209,7 @@
     <p>In this tutorial, we will discuss how to interface and run a TFT Graphic Display using a Raspberry Pi Pico. With this display, you can easily print graphics, text, animations, and more.</p>
     <p>This project requires only five GPIO pins on the Raspberry Pi Pico. The TFT display demonstrated here is <strong>1.8 inches</strong> and works via <strong>SPI communication</strong>. The same method applies to other sizes of SPI displays as well.</p>
 
-    <!-- Image Placeholder 1 -->
+    <!-- Image 1 (1280x720) -->
     <div class="img-container">
         <img src="TFT-pico-display.png" alt="Raspberry Pi Pico and 1.8-inch TFT Display">
         <div class="img-caption">Raspberry Pi Pico connected with 1.8-inch ST7735 TFT Display</div>
@@ -263,7 +267,7 @@
         <strong>⚠️ Power Warning:</strong> Both the power supply and data pins of the display operate at <strong>3.3V</strong>. Applying a higher voltage (like 5V) will permanently damage the display. Below the VCC pin, there are 3 NC (No Connection) pins which do not need to be wired.
     </div>
 
-    <!-- Image Placeholder 2 -->
+    <!-- Image 2 (1280x720) -->
     <div class="img-container">
         <img src="your-image-path-2.jpg" alt="Circuit Wiring Diagram">
         <div class="img-caption">Wiring schematic between Raspberry Pi Pico and ST7735 TFT Display</div>
@@ -382,7 +386,7 @@ tft.<span class="function">rgb</span>(<span class="keyword">True</span>)
     v = <span class="number">0</span>
     tft.<span class="function">text</span>((<span class="number">0</span>, v), <span class="string">"Hello World!"</span>, TFT.RED, sysfont)
     v += sysfont[<span class="string">"Height"</span>]
-    tft.<span class="function">text</span>((<span class="number">0</span>, v), <span class="function">str</span>(math.pi), TFT.GREEN, sysfont)
+    tft.<span class="string">text</span>((<span class="number">0</span>, v), <span class="function">str</span>(math.pi), TFT.GREEN, sysfont)
 
 <span class="keyword">def</span> <span class="function">test_main</span>():
     tft.<span class="function">fill</span>(TFT.BLACK)
