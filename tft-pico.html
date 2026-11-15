@@ -154,6 +154,23 @@
         .function { color: #38bdf8; }
         .string { color: #34d399; }
         .number { color: #fb923c; }
+
+        .img-container {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .img-caption {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -163,6 +180,12 @@
     
     <p>In this tutorial, we will discuss how to interface and run a TFT Graphic Display using a Raspberry Pi Pico. With this display, you can easily print graphics, text, animations, and more.</p>
     <p>This project requires only five GPIO pins on the Raspberry Pi Pico. The TFT display demonstrated here is <strong>1.8 inches</strong> and works via <strong>SPI communication</strong>. The same method applies to other sizes of SPI displays as well.</p>
+
+    <!-- Image Placeholder 1: Raspberry Pi Pico & Display Intro -->
+    <div class="img-container">
+        <img src="your-image-path-1.jpg" alt="Raspberry Pi Pico and 1.8-inch TFT Display">
+        <div class="img-caption">Raspberry Pi Pico connected with 1.8-inch ST7735 TFT Display</div>
+    </div>
 
     <h2>🛠️ Required Components</h2>
     <p>To build and experiment with this project, you will need the following components:</p>
@@ -214,6 +237,12 @@
     
     <div class="warning">
         <strong>⚠️ Power Warning:</strong> Both the power supply and data pins of the display operate at <strong>3.3V</strong>. Applying a higher voltage (like 5V) will permanently damage the display. Below the VCC pin, there are 3 NC (No Connection) pins which do not need to be wired.
+    </div>
+
+    <!-- Image Placeholder 2: Circuit Wiring Diagram -->
+    <div class="img-container">
+        <img src="your-image-path-2.jpg" alt="Circuit Wiring Diagram">
+        <div class="img-caption">Wiring schematic between Raspberry Pi Pico and ST7735 TFT Display</div>
     </div>
 
     <p>Here are the SPI connections between the Raspberry Pi Pico and the 1.8-inch TFT LCD Display:</p>
