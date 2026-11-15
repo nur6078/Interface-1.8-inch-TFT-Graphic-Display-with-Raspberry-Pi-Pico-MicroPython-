@@ -7,7 +7,7 @@
     <style>
         :root {
             --bg-main: #030712;
-            --bg-card: rgba(17, 24, 39, 0.85);
+            --bg-card: rgba(17, 24, 39, 0.95);
             --bg-table-header: rgba(31, 41, 55, 0.95);
             --bg-table-even: rgba(31, 41, 55, 0.35);
             --accent-cyan: #06b6d4;
@@ -27,7 +27,7 @@
                 radial-gradient(circle at 10% 10%, rgba(6, 182, 212, 0.07) 0%, transparent 45%),
                 radial-gradient(circle at 90% 90%, rgba(59, 130, 246, 0.05) 0%, transparent 45%);
             margin: 0;
-            padding: 40px 20px;
+            padding: 20px 10px; /* মোবাইলের জন্য আউটার প্যাডিং কমানো হলো */
         }
 
         .container {
@@ -36,7 +36,7 @@
             background: var(--bg-card);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            padding: 50px;
+            padding: 40px 30px; /* ডেস্কটপ প্যাডিং */
             border-radius: 20px;
             border: 1px solid var(--border-color);
             box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
@@ -57,7 +57,7 @@
         h2 {
             color: #f1f5f9;
             margin-top: 45px;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -85,14 +85,20 @@
             border: 1px solid rgba(6, 182, 212, 0.2);
         }
 
+        /* টেবিল রেসপন্সিভ করার জন্য র‍্যাপার */
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            margin: 25px 0;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
         table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            margin: 25px 0;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
+            white-space: nowrap; /* মোবাইলে টেবিলের লেখা ভেঙে যাওয়া রোধ করতে */
         }
 
         th, td {
@@ -171,7 +177,6 @@
         .string { color: #34d399; }
         .number { color: #fb923c; }
 
-        /* 1280x720 Image Preview Optimization */
         .img-container {
             margin: 30px 0;
             text-align: center;
@@ -179,8 +184,8 @@
         .img-container img {
             width: 100%;
             max-width: 100%;
-            aspect-ratio: 16 / 9; /* এটি সবসময় 1280/720 অনুপাতে ছবি লক রাখবে */
-            object-fit: cover;     /* ছবি যেন কোনোভাবে চ্যাপ্টা বা বিকৃত না হয় */
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
             height: auto;
             border-radius: 12px;
             border: 1px solid var(--border-color);
@@ -198,6 +203,26 @@
         }
         li {
             margin-bottom: 8px;
+        }
+
+        /* --- মোবাইল ফ্রেন্ডলি রেসপন্সিভ মিডিয়া কোয়েরি (Mobile Responsive) --- */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px 5px;
+            }
+            .container {
+                padding: 20px 15px; /* মোবাইলে কার্ডের ভেতরের প্যাডিং কমানো হলো যাতে লেখা বড় দেখায় */
+                border-radius: 12px;
+            }
+            h1 {
+                font-size: 1.6rem; /* মোবাইলে শিরোনাম ছোট ও পারফেক্ট দেখাবে */
+            }
+            h2 {
+                font-size: 1.2rem;
+            }
+            p, li, td, th {
+                font-size: 0.95rem; /* লেখার সাইজ মোবাইলের জন্য নিখুঁত করা হলো */
+            }
         }
     </style>
 </head>
@@ -217,48 +242,52 @@
 
     <h2>Required Components</h2>
     <p>To build and experiment with this project, you will need the following components:</p>
-    <table>
-        <thead>
-            <tr>
-                <th>Sl. No.</th>
-                <th>Component Name</th>
-                <th>Quantity</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Raspberry Pi Pico</td>
-                <td>1</td>
-                <td>Microcontroller board with headers</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Micro USB Data Cable</td>
-                <td>1</td>
-                <td>For power & programming</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Breadboard (830 Point)</td>
-                <td>1</td>
-                <td>For circuit prototyping</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>TFT LCD Display Module (1.8-inch)</td>
-                <td>1</td>
-                <td>ST7735 Driver</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>Jumper Wires</td>
-                <td>As needed</td>
-                <td>Male-to-male (7 pieces required)</td>
-            </tr>
-        </tbody>
-    </table>
+    
+    <!-- টেবিলটি মোবাইলে সুন্দর দেখানোর জন্য .table-wrapper দিয়ে র‍্যাপ করা হয়েছে -->
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Sl. No.</th>
+                    <th>Component Name</th>
+                    <th>Quantity</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Raspberry Pi Pico</td>
+                    <td>1</td>
+                    <td>Microcontroller board with headers</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Micro USB Data Cable</td>
+                    <td>1</td>
+                    <td>For power & programming</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Breadboard (830 Point)</td>
+                    <td>1</td>
+                    <td>For circuit prototyping</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>TFT LCD Display Module (1.8-inch)</td>
+                    <td>1</td>
+                    <td>ST7735 Driver</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Jumper Wires</td>
+                    <td>As needed</td>
+                    <td>Male-to-male (7 pieces required)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <h2>Circuit Connections (Pinout)</h2>
     <p>Make sure to use an 830-point breadboard (or two smaller ones) to mount the Raspberry Pi Pico and the TFT display safely.</p>
@@ -274,52 +303,55 @@
     </div>
 
     <p>Here are the SPI connections between the Raspberry Pi Pico and the 1.8-inch TFT LCD Display:</p>
-    <table>
-        <thead>
-            <tr>
-                <th>Raspberry Pi Pico Pin</th>
-                <th>TFT LCD Display Pin</th>
-                <th>Function</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>GP18</strong></td>
-                <td>CS</td>
-                <td>Chip Select</td>
-            </tr>
-            <tr>
-                <td><strong>GP17</strong></td>
-                <td>RST</td>
-                <td>Reset</td>
-            </tr>
-            <tr>
-                <td><strong>GP16</strong></td>
-                <td>RS (DC)</td>
-                <td>Register Select / Data Command</td>
-            </tr>
-            <tr>
-                <td><strong>GP11</strong></td>
-                <td>SDA (MOSI)</td>
-                <td>Data Line</td>
-            </tr>
-            <tr>
-                <td><strong>GP10</strong></td>
-                <td>CLK (SCK)</td>
-                <td>Clock Line</td>
-            </tr>
-            <tr>
-                <td><strong>GND</strong></td>
-                <td>GND</td>
-                <td>Ground</td>
-            </tr>
-            <tr>
-                <td><strong>3V3 (OUT)</strong></td>
-                <td>3.3V</td>
-                <td>Power Supply (3.3V)</td>
-            </tr>
-        </tbody>
-    </table>
+    
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Raspberry Pi Pico Pin</th>
+                    <th>TFT LCD Display Pin</th>
+                    <th>Function</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>GP18</strong></td>
+                    <td>CS</td>
+                    <td>Chip Select</td>
+                </tr>
+                <tr>
+                    <td><strong>GP17</strong></td>
+                    <td>RST</td>
+                    <td>Reset</td>
+                </tr>
+                <tr>
+                    <td><strong>GP16</strong></td>
+                    <td>RS (DC)</td>
+                    <td>Register Select / Data Command</td>
+                </tr>
+                <tr>
+                    <td><strong>GP11</strong></td>
+                    <td>SDA (MOSI)</td>
+                    <td>Data Line</td>
+                </tr>
+                <tr>
+                    <td><strong>GP10</strong></td>
+                    <td>CLK (SCK)</td>
+                    <td>Clock Line</td>
+                </tr>
+                <tr>
+                    <td><strong>GND</strong></td>
+                    <td>GND</td>
+                    <td>Ground</td>
+                </tr>
+                <tr>
+                    <td><strong>3V3 (OUT)</strong></td>
+                    <td>3.3V</td>
+                    <td>Power Supply (3.3V)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <p><em>(Note: The SD card portion of the display module is not required for this tutorial; only the display pins need to be connected).</em></p>
 
     <h2>Library Installation</h2>
@@ -358,7 +390,7 @@ tft.<span class="function">rgb</span>(<span class="keyword">True</span>)
     <span class="keyword">for</span> x <span class="keyword">in</span> <span class="function">range</span>(<span class="number">0</span>, tft.<span class="function">size</span>()[<span class="number">0</span>], <span class="number">6</span>):
         tft.<span class="function">line</span>((tft.<span class="function">size</span>()[<span class="number">0</span>] - <span class="number">1</span>, <span class="number">0</span>), (x, tft.<span class="function">size</span>()[<span class="number">1</span>] - <span class="number">1</span>), color)
     <span class="keyword">for</span> y <span class="keyword">in</span> <span class="function">range</span>(<span class="number">0</span>, tft.<span class="function">size</span>()[<span class="number">1</span>], <span class="number">6</span>):
-        tft.<span class="function">line</span>((tft.<span class="function">size</span>()[<span class="number">0</span>] - <span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, y), color)
+        tft.<span class="function">line</span>((tft.<span class="function">size</span>()[<span class="number">0</span>] - <span class="number">1</span>, <span class="number">0</span>), (<span class="no">0</span>, y), color)
 
 <span class="keyword">def</span> <span class="function">testfastlines</span>(color1, color2):
     tft.<span class="function">fill</span>(TFT.BLACK)
@@ -369,7 +401,7 @@ tft.<span class="function">rgb</span>(<span class="keyword">True</span>)
 
 <span class="keyword">def</span> <span class="function">testdrawrects</span>(color):
     tft.<span class="function">fill</span>(TFT.BLACK)
-    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="function">range</span>(<span class="number">0</span>, tft.<span class="function">size</span>()[<span class="number">0</span>], <span class="number">6</span>):
+    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="number">0</span>, tft.<span class="function">size</span>()[<span class="number">0</span>], <span class="number">6</span>):
         tft.<span class="function">rect</span>((tft.<span class="function">size</span>()[<span class="number">0</span>]//<span class="number">2</span> - x//<span class="number">2</span>, tft.<span class="function">size</span>()[<span class="number">1</span>]//<span class="number">2</span> - x/<span class="number">2</span>), (x, x), color)
 
 <span class="keyword">def</span> <span class="function">tftprinttest</span>():
@@ -379,14 +411,14 @@ tft.<span class="function">rgb</span>(<span class="keyword">True</span>)
     v += sysfont[<span class="string">"Height"</span>]
     tft.<span class="function">text</span>((<span class="number">0</span>, v), <span class="string">"Hello World!"</span>, TFT.YELLOW, sysfont, <span class="number">2</span>, nowrap=<span class="keyword">True</span>)
     v += sysfont[<span class="string">"Height"</span>] * <span class="number">2</span>
-    tft.<span class="function">text</span>((<span class="number">0</span>, v), <span class="string">"Hello World!"</span>, TFT.GREEN, sysfont, <span class="number">3</span>, nowrap=<span class="keyword">True</span>)
+    tft.<span class="function">text</span>((<span class="number">0</span>, v), <span class="string">"Hello World!", TFT.GREEN, sysfont, <span class="number">3</span>, nowrap=<span class="keyword">True</span>)
     
     time.<span class="function">sleep_ms</span>(<span class="number">1500</span>)
     tft.<span class="function">fill</span>(TFT.BLACK)
     v = <span class="number">0</span>
     tft.<span class="function">text</span>((<span class="number">0</span>, v), <span class="string">"Hello World!"</span>, TFT.RED, sysfont)
     v += sysfont[<span class="string">"Height"</span>]
-    tft.<span class="string">text</span>((<span class="number">0</span>, v), <span class="function">str</span>(math.pi), TFT.GREEN, sysfont)
+    tft.<span class="function">text</span>((<span class="number">0</span>, v), <span class="function">str</span>(math.pi), TFT.GREEN, sysfont)
 
 <span class="keyword">def</span> <span class="function">test_main</span>():
     tft.<span class="function">fill</span>(TFT.BLACK)
