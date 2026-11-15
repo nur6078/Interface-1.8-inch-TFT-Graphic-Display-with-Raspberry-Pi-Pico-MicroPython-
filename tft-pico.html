@@ -6,76 +6,154 @@
     <title>Interface 1.8-inch TFT Graphic Display with Raspberry Pi Pico</title>
     <style>
         :root {
-            --primary-color: #0056b3;
-            --bg-color: #f8f9fa;
-            --text-color: #333;
-            --code-bg: #f1f3f5;
-            --border-color: #dee2e6;
+            --bg-main: #070b14;
+            --bg-card: rgba(15, 23, 42, 0.75);
+            --bg-table-header: rgba(30, 41, 59, 0.9);
+            --bg-table-even: rgba(30, 41, 59, 0.4);
+            --accent-cyan: #22d3ee;
+            --accent-cyan-glow: rgba(34, 211, 238, 0.15);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: rgba(148, 163, 184, 0.2);
+            --code-bg: #0b1120;
         }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(34, 211, 238, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(56, 189, 248, 0.06) 0%, transparent 40%);
             margin: 0;
-            padding: 20px;
+            padding: 30px 20px;
         }
+
         .container {
-            max-width: 900px;
+            max-width: 920px;
             margin: 0 auto;
-            background: #fff;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 45px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
+
         h1 {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 10px;
+            color: var(--accent-cyan);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
             margin-top: 0;
+            font-size: 1.9rem;
+            letter-spacing: -0.02em;
         }
+
         h2 {
-            color: #2c3e50;
-            margin-top: 30px;
+            color: #e2e8f0;
+            margin-top: 35px;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+
+        p, li {
+            color: var(--text-secondary);
+        }
+
+        strong {
+            color: var(--text-primary);
+        }
+
+        code {
+            background-color: rgba(34, 211, 238, 0.1);
+            color: var(--accent-cyan);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
+            font-size: 0.9em;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
+            margin: 22px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
         }
+
         th, td {
             border: 1px solid var(--border-color);
-            padding: 12px;
+            padding: 13px 16px;
             text-align: left;
         }
+
         th {
-            background-color: #e9ecef;
-            color: #495057;
+            background-color: var(--bg-table-header);
+            color: var(--accent-cyan);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
         }
+
+        td {
+            color: var(--text-primary);
+        }
+
         tr:nth-child(even) {
-            background-color: #f8f9fa;
+            background-color: var(--bg-table-even);
         }
+
+        tr:hover {
+            background-color: rgba(34, 211, 238, 0.05);
+            transition: background-color 0.2s ease;
+        }
+
         .warning {
-            background-color: #fff3cd;
-            border-left: 5px solid #ffc107;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 4px;
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid #f59e0b;
+            border-top: 1px solid rgba(245, 158, 11, 0.2);
+            border-right: 1px solid rgba(245, 158, 11, 0.2);
+            border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+            color: #fde68a;
+            padding: 16px 20px;
+            margin: 25px 0;
+            border-radius: 8px;
         }
+
+        .warning strong {
+            color: #fbbf24;
+        }
+
         pre {
-            background-color: #212529;
-            color: #f8f9fa;
-            padding: 20px;
-            border-radius: 6px;
+            background-color: var(--code-bg);
+            color: #e2e8f0;
+            padding: 22px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
             overflow-x: auto;
-            font-family: "Courier New", Courier, monospace;
+            font-family: "Fira Code", "Courier New", Courier, monospace;
             font-size: 14px;
-            line-height: 1.4;
+            line-height: 1.5;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.4);
         }
-        .comment { color: #6c757d; }
-        .keyword { color: #cc99cc; }
-        .function { color: #66ccff; }
-        .string { color: #99cc99; }
+
+        pre code {
+            background: none;
+            color: inherit;
+            padding: 0;
+        }
+
+        .comment { color: #64748b; font-style: italic; }
+        .keyword { color: #c084fc; }
+        .function { color: #38bdf8; }
+        .string { color: #34d399; }
+        .number { color: #fb923c; }
     </style>
 </head>
 <body>
@@ -193,79 +271,79 @@
     <ol>
         <li>Download the required library files to your computer.</li>
         <li>Open the downloaded files using Thonny IDE.</li>
-        <li>Click <strong>File > Save As...</strong>, and select <strong>Raspberry Pi Pico</strong> as the destination.</li>
+        <li>Click <strong>File &gt; Save As...</strong>, and select <strong>Raspberry Pi Pico</strong> as the destination.</li>
         <li>Save the files with their exact original names directly onto the Pico. Do not change the library names.</li>
     </ol>
 
     <h2>💻 Python Code for TFT Display</h2>
     <p>Once the libraries are saved on your Pico, paste the following script into Thonny IDE and run it:</p>
     
-<pre><code>from ST7735 import TFT
-from sysfont import sysfont
-from machine import SPI, Pin
-import time
-import math
+<pre><code><span class="keyword">from</span> ST7735 <span class="keyword">import</span> TFT
+<span class="keyword">from</span> sysfont <span class="keyword">import</span> sysfont
+<span class="keyword">from</span> machine <span class="keyword">import</span> SPI, Pin
+<span class="keyword">import</span> time
+<span class="keyword">import</span> math
 
-spi = SPI(1, baudrate=20000000, polarity=0, phase=0,
-          sck=Pin(10), mosi=Pin(11), miso=None)
-tft = TFT(spi, 16, 17, 18)
-tft.initr()
-tft.rgb(True)
+spi = <span class="function">SPI</span>(<span class="number">1</span>, baudrate=<span class="number">20000000</span>, polarity=<span class="number">0</span>, phase=<span class="number">0</span>,
+          sck=<span class="function">Pin</span>(<span class="number">10</span>), mosi=<span class="function">Pin</span>(<span class="number">11</span>), miso=<span class="keyword">None</span>)
+tft = <span class="function">TFT</span>(spi, <span class="number">16</span>, <span class="number">17</span>, <span class="number">18</span>)
+tft.<span class="function">initr</span>()
+tft.<span class="function">rgb</span>(<span class="keyword">True</span>)
 
-def testlines(color):
-    tft.fill(TFT.BLUE)
-    for x in range(0, tft.size()[0], 6):
-        tft.line((0, 0), (x, tft.size()[1] - 1), color)
-    for y in range(0, tft.size()[1], 6):
-        tft.line((0, 0), (tft.size()[0] - 1, y), color)
+<span class="keyword">def</span> <span class="function">testlines</span>(color):
+    tft.<span class="function">fill</span>(TFT.BLUE)
+    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="function">range</span>(<span class="number">0</span>, tft.<span class="function">size</span>()[<span class="number">0</span>], <span class="number">6</span>):
+        tft.<span class="function">line</span>((<span class="number">0</span>, <span class="number">0</span>), (x, tft.<span class="function">size</span>()[<span class="number">1</span>] - <span class="number">1</span>), color)
+    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="function">range</span>(<span class="number">0</span>, tft.<span class="function">size</span>()[<span class="number">1</span>], <span class="number">6</span>):
+        tft.<span class="function">line</span>((<span class="number">0</span>, <span class="number">0</span>), (tft.<span class="function">size</span>()[<span class="number">0</span>] - <span class="number">1</span>, y), color)
     
-    tft.fill(TFT.BLACK)
-    for x in range(0, tft.size()[0], 6):
-        tft.line((tft.size()[0] - 1, 0), (x, tft.size()[1] - 1), color)
-    for y in range(0, tft.size()[1], 6):
-        tft.line((tft.size()[0] - 1, 0), (0, y), color)
+    tft.<span class="function">fill</span>(TFT.BLACK)
+    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="function">range</span>(<span class="number">0</span>, tft.<span class="function">size</span>()[<span class="number">0</span>], <span class="number">6</span>):
+        tft.<span class="function">line</span>((tft.<span class="function">size</span>()[<span class="number">0</span>] - <span class="number">1</span>, <span class="number">0</span>), (x, tft.<span class="function">size</span>()[<span class="number">1</span>] - <span class="number">1</span>), color)
+    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="function">range</span>(<span class="number">0</span>, tft.<span class="function">size</span>()[<span class="number">1</span>], <span class="number">6</span>):
+        tft.<span class="function">line</span>((tft.<span class="function">size</span>()[<span class="number">0</span>] - <span class="number">1</span>, <span class="number">0</span>), (<span class="number">0</span>, y), color)
 
-def testfastlines(color1, color2):
-    tft.fill(TFT.BLACK)
-    for y in range(0, tft.size()[1], 5):
-        tft.hline((0, y), tft.size()[0], color1)
-    for x in range(0, tft.size()[0], 5):
-        tft.vline((x, 0), tft.size()[1], color2)
+<span class="keyword">def</span> <span class="function">testfastlines</span>(color1, color2):
+    tft.<span class="function">fill</span>(TFT.BLACK)
+    <span class="keyword">for</span> y <span class="keyword">in</span> <span class="function">range</span>(<span class="number">0</span>, tft.<span class="function">size</span>()[<span class="number">1</span>], <span class="number">5</span>):
+        tft.<span class="function">hline</span>((<span class="number">0</span>, y), tft.<span class="function">size</span>()[<span class="number">0</span>], color1)
+    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="function">range</span>(<span class="number">0</span>, tft.<span class="function">size</span>()[<span class="number">0</span>], <span class="number">5</span>):
+        tft.<span class="function">vline</span>((x, <span class="number">0</span>), tft.<span class="function">size</span>()[<span class="number">1</span>], color2)
 
-def testdrawrects(color):
-    tft.fill(TFT.BLACK)
-    for x in range(0, tft.size()[0], 6):
-        tft.rect((tft.size()[0]//2 - x//2, tft.size()[1]//2 - x/2), (x, x), color)
+<span class="keyword">def</span> <span class="function">testdrawrects</span>(color):
+    tft.<span class="function">fill</span>(TFT.BLACK)
+    <span class="keyword">for</span> x <span class="keyword">in</span> <span class="function">range</span>(<span class="number">0</span>, tft.<span class="function">size</span>()[<span class="number">0</span>], <span class="number">6</span>):
+        tft.<span class="function">rect</span>((tft.<span class="function">size</span>()[<span class="number">0</span>]//<span class="number">2</span> - x//<span class="number">2</span>, tft.<span class="function">size</span>()[<span class="number">1</span>]//<span class="number">2</span> - x/<span class="number">2</span>), (x, x), color)
 
-def tftprinttest():
-    tft.fill(TFT.BLACK)
-    v = 30
-    tft.text((0, v), "Hello World!", TFT.RED, sysfont, 1, nowrap=True)
-    v += sysfont["Height"]
-    tft.text((0, v), "Hello World!", TFT.YELLOW, sysfont, 2, nowrap=True)
-    v += sysfont["Height"] * 2
-    tft.text((0, v), "Hello World!", TFT.GREEN, sysfont, 3, nowrap=True)
+<span class="keyword">def</span> <span class="function">tftprinttest</span>():
+    tft.<span class="function">fill</span>(TFT.BLACK)
+    v = <span class="number">30</span>
+    tft.<span class="function">text</span>((<span class="number">0</span>, v), <span class="string">"Hello World!"</span>, TFT.RED, sysfont, <span class="number">1</span>, nowrap=<span class="keyword">True</span>)
+    v += sysfont[<span class="string">"Height"</span>]
+    tft.<span class="function">text</span>((<span class="number">0</span>, v), <span class="string">"Hello World!"</span>, TFT.YELLOW, sysfont, <span class="number">2</span>, nowrap=<span class="keyword">True</span>)
+    v += sysfont[<span class="string">"Height"</span>] * <span class="number">2</span>
+    tft.<span class="function">text</span>((<span class="number">0</span>, v), <span class="string">"Hello World!"</span>, TFT.GREEN, sysfont, <span class="number">3</span>, nowrap=<span class="keyword">True</span>)
     
-    time.sleep_ms(1500)
-    tft.fill(TFT.BLACK)
-    v = 0
-    tft.text((0, v), "Hello World!", TFT.RED, sysfont)
-    v += sysfont["Height"]
-    tft.text((0, v), str(math.pi), TFT.GREEN, sysfont)
+    time.<span class="function">sleep_ms</span>(<span class="number">1500</span>)
+    tft.<span class="function">fill</span>(TFT.BLACK)
+    v = <span class="number">0</span>
+    tft.<span class="function">text</span>((<span class="number">0</span>, v), <span class="string">"Hello World!"</span>, TFT.RED, sysfont)
+    v += sysfont[<span class="string">"Height"</span>]
+    tft.<span class="function">text</span>((<span class="number">0</span>, v), <span class="function">str</span>(math.pi), TFT.GREEN, sysfont)
 
-def test_main():
-    tft.fill(TFT.BLACK)
-    tftprinttest()
-    time.sleep_ms(2000)
-    testlines(TFT.YELLOW)
-    time.sleep_ms(500)
-    testfastlines(TFT.RED, TFT.BLUE)
-    time.sleep_ms(500)
-    testdrawrects(TFT.GREEN)
-    time.sleep_ms(500)
+<span class="keyword">def</span> <span class="function">test_main</span>():
+    tft.<span class="function">fill</span>(TFT.BLACK)
+    <span class="function">tftprinttest</span>()
+    time.<span class="function">sleep_ms</span>(<span class="number">2000</span>)
+    <span class="function">testlines</span>(TFT.YELLOW)
+    time.<span class="function">sleep_ms</span>(<span class="number">500</span>)
+    <span class="function">testfastlines</span>(TFT.RED, TFT.BLUE)
+    time.<span class="function">sleep_ms</span>(<span class="number">500</span>)
+    <span class="function">testdrawrects</span>(TFT.GREEN)
+    time.<span class="function">sleep_ms</span>(<span class="number">500</span>)
 
-while True:
-    test_main()</code></pre>
+<span class="keyword">while</span> <span class="keyword">True</span>:
+    <span class="function">test_main</span>()</code></pre>
 
 </div>
 
