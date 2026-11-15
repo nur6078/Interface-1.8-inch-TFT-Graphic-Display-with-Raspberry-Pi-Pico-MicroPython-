@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interface 1.8-inch TFT Graphic Display with Raspberry Pi Pico</title>
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --code-bg: #f1f3f5;
+            --border-color: #dee2e6;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        h1 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-top: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        pre {
+            background-color: #212529;
+            color: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .comment { color: #6c757d; }
+        .keyword { color: #cc99cc; }
+        .function { color: #66ccff; }
+        .string { color: #99cc99; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Interface 1.8-inch TFT Graphic Display with Raspberry Pi Pico (MicroPython)</h1>
+    
+    <p>In this tutorial, we will discuss how to interface and run a TFT Graphic Display using a Raspberry Pi Pico. With this display, you can easily print graphics, text, animations, and more.</p>
+    <p>This project requires only five GPIO pins on the Raspberry Pi Pico. The TFT display demonstrated here is <strong>1.8 inches</strong> and works via <strong>SPI communication</strong>. The same method applies to other sizes of SPI displays as well.</p>
+
+    <h2>🛠️ Required Components</h2>
+    <p>To build and experiment with this project, you will need the following components:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Sl. No.</th>
+                <th>Component Name</th>
+                <th>Quantity</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Raspberry Pi Pico</td>
+                <td>1</td>
+                <td>Microcontroller board with headers</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Micro USB Data Cable</td>
+                <td>1</td>
+                <td>For power & programming</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Breadboard (830 Point)</td>
+                <td>1</td>
+                <td>For circuit prototyping</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>TFT LCD Display Module (1.8-inch)</td>
+                <td>1</td>
+                <td>ST7735 Driver</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Jumper Wires</td>
+                <td>As needed</td>
+                <td>Male-to-male (7 pieces required)</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>⚡ Circuit Connections (Pinout)</h2>
+    <p>Make sure to use an 830-point breadboard (or two smaller ones) to mount the Raspberry Pi Pico and the TFT display safely.</p>
+    
+    <div class="warning">
+        <strong>⚠️ Power Warning:</strong> Both the power supply and data pins of the display operate at <strong>3.3V</strong>. Applying a higher voltage (like 5V) will permanently damage the display. Below the VCC pin, there are 3 NC (No Connection) pins which do not need to be wired.
+    </div>
+
+    <p>Here are the SPI connections between the Raspberry Pi Pico and the 1.8-inch TFT LCD Display:</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Raspberry Pi Pico Pin</th>
+                <th>TFT LCD Display Pin</th>
+                <th>Function</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>GP18</strong></td>
+                <td>CS</td>
+                <td>Chip Select</td>
+            </tr>
+            <tr>
+                <td><strong>GP17</strong></td>
+                <td>RST</td>
+                <td>Reset</td>
+            </tr>
+            <tr>
+                <td><strong>GP16</strong></td>
+                <td>RS (DC)</td>
+                <td>Register Select / Data Command</td>
+            </tr>
+            <tr>
+                <td><strong>GP11</strong></td>
+                <td>SDA (MOSI)</td>
+                <td>Data Line</td>
+            </tr>
+            <tr>
+                <td><strong>GP10</strong></td>
+                <td>CLK (SCK)</td>
+                <td>Clock Line</td>
+            </tr>
+            <tr>
+                <td><strong>GND</strong></td>
+                <td>GND</td>
+                <td>Ground</td>
+            </tr>
+            <tr>
+                <td><strong>3V3 (OUT)</strong></td>
+                <td>3.3V</td>
+                <td>Power Supply (3.3V)</td>
+            </tr>
+        </tbody>
+    </table>
+    <p><em>(Note: The SD card portion of the display module is not required for this tutorial; only the display pins need to be connected).</em></p>
+
+    <h2>📚 Library Installation</h2>
+    <p>This experiment requires two library files: <code>ST7735.py</code> and <code>sysfont.py</code>.</p>
+    <p>We will use the <strong>Thonny IDE</strong> to upload these files to the Raspberry Pi Pico:</p>
+    <ol>
+        <li>Download the required library files to your computer.</li>
+        <li>Open the downloaded files using Thonny IDE.</li>
+        <li>Click <strong>File > Save As...</strong>, and select <strong>Raspberry Pi Pico</strong> as the destination.</li>
+        <li>Save the files with their exact original names directly onto the Pico. Do not change the library names.</li>
+    </ol>
+
+    <h2>💻 Python Code for TFT Display</h2>
+    <p>Once the libraries are saved on your Pico, paste the following script into Thonny IDE and run it:</p>
+    
+<pre><code>from ST7735 import TFT
+from sysfont import sysfont
+from machine import SPI, Pin
+import time
+import math
+
+spi = SPI(1, baudrate=20000000, polarity=0, phase=0,
+          sck=Pin(10), mosi=Pin(11), miso=None)
+tft = TFT(spi, 16, 17, 18)
+tft.initr()
+tft.rgb(True)
+
+def testlines(color):
+    tft.fill(TFT.BLUE)
+    for x in range(0, tft.size()[0], 6):
+        tft.line((0, 0), (x, tft.size()[1] - 1), color)
+    for y in range(0, tft.size()[1], 6):
+        tft.line((0, 0), (tft.size()[0] - 1, y), color)
+    
+    tft.fill(TFT.BLACK)
+    for x in range(0, tft.size()[0], 6):
+        tft.line((tft.size()[0] - 1, 0), (x, tft.size()[1] - 1), color)
+    for y in range(0, tft.size()[1], 6):
+        tft.line((tft.size()[0] - 1, 0), (0, y), color)
+
+def testfastlines(color1, color2):
+    tft.fill(TFT.BLACK)
+    for y in range(0, tft.size()[1], 5):
+        tft.hline((0, y), tft.size()[0], color1)
+    for x in range(0, tft.size()[0], 5):
+        tft.vline((x, 0), tft.size()[1], color2)
+
+def testdrawrects(color):
+    tft.fill(TFT.BLACK)
+    for x in range(0, tft.size()[0], 6):
+        tft.rect((tft.size()[0]//2 - x//2, tft.size()[1]//2 - x/2), (x, x), color)
+
+def tftprinttest():
+    tft.fill(TFT.BLACK)
+    v = 30
+    tft.text((0, v), "Hello World!", TFT.RED, sysfont, 1, nowrap=True)
+    v += sysfont["Height"]
+    tft.text((0, v), "Hello World!", TFT.YELLOW, sysfont, 2, nowrap=True)
+    v += sysfont["Height"] * 2
+    tft.text((0, v), "Hello World!", TFT.GREEN, sysfont, 3, nowrap=True)
+    
+    time.sleep_ms(1500)
+    tft.fill(TFT.BLACK)
+    v = 0
+    tft.text((0, v), "Hello World!", TFT.RED, sysfont)
+    v += sysfont["Height"]
+    tft.text((0, v), str(math.pi), TFT.GREEN, sysfont)
+
+def test_main():
+    tft.fill(TFT.BLACK)
+    tftprinttest()
+    time.sleep_ms(2000)
+    testlines(TFT.YELLOW)
+    time.sleep_ms(500)
+    testfastlines(TFT.RED, TFT.BLUE)
+    time.sleep_ms(500)
+    testdrawrects(TFT.GREEN)
+    time.sleep_ms(500)
+
+while True:
+    test_main()</code></pre>
+
+</div>
+
+</body>
+</html>
